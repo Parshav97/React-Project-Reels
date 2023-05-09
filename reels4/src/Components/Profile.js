@@ -7,26 +7,26 @@ import Typography from '@mui/material/Typography';
 import "./Profile.css"
 
 // import CircularProgress from '@mui/material/CircularProgress'
-import Video from './Video'
+// import Video from './Video'
 import './Posts.css'
-import Avatar from '@mui/material/Avatar';
-import Like from './Like'
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+// import Avatar from '@mui/material/Avatar';
+// import Like from './Like'
+// import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 
 
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+// import DialogTitle from '@mui/material/DialogTitle';
 
 
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+// import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
 // import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions } from '@mui/material';
+// import { CardActionArea, CardActions } from '@mui/material';
 
 import Like2 from './Like2'
 import AddComments from './AddComments'
@@ -59,18 +59,21 @@ function Profile() {
         })
     }, [id])
 
-    useEffect(async () => {
-        if (userData != null) {
-            let parr = []
-            for (let i = 0; i < userData.postIds.length; i++) {
-                let postData = await database.posts.doc(userData.postIds[i]).get()
-                // parr.push({...postData.data(),postId:postData.id})
-                // console.log(postData.data())
-                parr.push({...postData.data(), postId:postData.id})
+    useEffect(() => {
+        async function fetchData(){
+            if (userData != null) {
+                let parr = []
+                for (let i = 0; i < userData.postIds.length; i++) {
+                    let postData = await database.posts.doc(userData.postIds[i]).get()
+                    // parr.push({...postData.data(),postId:postData.id})
+                    // console.log(postData.data())
+                    parr.push({...postData.data(), postId:postData.id})
+                }
+                setPosts(parr)
             }
-            setPosts(parr)
         }
-    })
+        fetchData();
+    },[userData]);
 
     return (
         <>
@@ -83,7 +86,7 @@ function Profile() {
                         <div className="container">
                             <div className="upper-part">
                                 <div className="profile-img">
-                                    <img src={userData.profileUrl} />
+                                    {/* <img src={userData.profileUrl} alt=""/> */}
                                 </div>
                                 <div className="info">
                                     <Typography variant="h5">
@@ -104,7 +107,7 @@ function Profile() {
                                                     <source src={post.pUrl} />
                                                 </video>
                                                 <Dialog
-                                                    open={open == post.id}
+                                                    open={open === post.id}
                                                     onClose={handleClose}
                                                     aria-labelledby="alert-dialog-title"
                                                     aria-describedby="alert-dialog-description"
@@ -125,7 +128,7 @@ function Profile() {
                                                             </Card>
 
                                                             <Card variant="outlined" className="card2">
-                                                                <Typography style={{ padding: '0.4rem' }}>{post.likes.length == 0 ? 'Liked by nobody' : `Liked by ${post.likes.length} users`}</Typography>
+                                                                <Typography style={{ padding: '0.4rem' }}>{post.likes.length === 0 ? 'Liked by nobody' : `Liked by ${post.likes.length} users`}</Typography>
                                                                 <div style={{ display: 'flex' }}>
                                                                     <Like2 postData={post} userData={userData} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
                                                                     <AddComments postData={post} userData={userData} />
