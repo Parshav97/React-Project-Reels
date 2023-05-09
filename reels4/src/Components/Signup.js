@@ -69,7 +69,8 @@ export default function Signup() {
                         userId:uid,
                         fullname:name,
                         profileUrl:url,
-                        createdAt:database.getTimeStamp()
+                        createdAt:database.getTimeStamp(),
+                        postIds : []
                     })
                 })
                 setLoading(false)
@@ -101,7 +102,7 @@ export default function Signup() {
                         <Typography variant="body2" color="text.secondary" align='center'>
                             Sign up to see photos and videos from your friends
                         </Typography>
-                        {error != '' && <Alert severity="error">{error}</Alert>}
+                        {error !== '' && <Alert severity="error">{error}</Alert>}
                         <TextField id="outlined-basic" label="Email" variant="outlined" fullWidth={true} margin="dense" size="small" value={email} onChange={(e) => setEmail(e.target.value)} />
                         <TextField id="outlined-basic" label="Password" variant="outlined" fullWidth={true} margin="dense" size="small" value={password} onChange={(e) => setPassword(e.target.value)} />
                         <TextField id="outlined-basic" label="Full Name" variant="outlined" fullWidth={true} margin="dense" size="small" value={name} onChange={(e) => setName(e.target.value)} />

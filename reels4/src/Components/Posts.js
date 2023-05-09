@@ -41,7 +41,7 @@ function Posts({ userData }) {
         setOpen(null);
     };
 
-    useEffect(async () => {
+    useEffect(() => {
         let parr = []
 
         // console.log(await database.posts.orderBy('createdAt','desc').get())
